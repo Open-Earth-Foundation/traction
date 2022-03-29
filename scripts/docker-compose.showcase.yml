@@ -30,6 +30,8 @@ services:
       - host.docker.internal:host-gateway
     volumes:
       - ../services/showcase:/traction/app:rw
+    networks:
+      - openclimate_app-network
 
   showcase-db:
     image: "postgres:12"
@@ -45,6 +47,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - openclimate_app-network
 
 volumes:
   traction-showcase:
+networks:
+  openclimate_app-network:
+    external: true

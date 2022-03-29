@@ -41,6 +41,8 @@ services:
       - host.docker.internal:host-gateway
     volumes:
       - ../services/traction:/app:rw
+    networks:
+      - openclimate_app-network
 
   traction-agent:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
@@ -83,14 +85,14 @@ services:
         --auto-request-endorsement \
         --auto-write-transactions \
         --auto-create-revocation-transactions \
-        --notify-revocation \
-        --monitor-revocation-notification \
         ",
       ]
     volumes:
       - "./acapy-static-args.yml:/home/indy/acapy-static-args.yml"
     extra_hosts:
       - host.docker.internal:host-gateway
+    networks:
+      - openclimate_app-network
 
   traction-db:
     image: "postgres:12"
@@ -106,6 +108,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - openclimate_app-network
 
   endorser-api:
     build:
@@ -138,6 +142,8 @@ services:
       - host.docker.internal:host-gateway
     volumes:
       - ../services/endorser:/app:rw
+    networks:
+      - openclimate_app-network
 
   endorser-agent:
     image: bcgovimages/aries-cloudagent:py36-1.16-1_0.7.3
@@ -177,6 +183,8 @@ services:
       - "./endorser-acapy-args.yml:/home/indy/endorser-acapy-args.yml"
     extra_hosts:
       - host.docker.internal:host-gateway
+    networks:
+      - openclimate_app-network
 
   endorser-db:
     image: "postgres:12"
@@ -192,7 +200,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - openclimate_app-network
 
 volumes:
   traction-wallet:
   endorser-wallet:
+
+networks:
+  openclimate_app-network:
+    external: true

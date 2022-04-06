@@ -44,6 +44,11 @@ export default function getRouter(basePath = '/') {
         component: () => import(/* webpackChunkName: "acme" */ '@/views/Acme.vue'),
       },
       {
+        path: '/openeclimate',
+        name: 'Openclimate',
+        component: () => import(/* webpackChunkName: "acme" */ '@/views/Openclimate.vue'),
+      },
+      {
         path: '/404',
         alias: '*',
         name: 'NotFound',

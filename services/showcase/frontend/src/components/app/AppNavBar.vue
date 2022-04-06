@@ -17,6 +17,9 @@
         <li>
           <router-link :to="{ name: 'Acme' }">Acme</router-link>
         </li>
+        <li>
+          <router-link :to="{ name: 'Openclimate' }">Openclimate</router-link>
+        </li>
       </ul>
     </div>
   </nav>

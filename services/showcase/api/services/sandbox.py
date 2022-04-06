@@ -95,6 +95,7 @@ async def create_new_sandbox(
     alice = await create_new_line_of_business(sandbox, lobs_repo, "Alice", issuer=False)
     await create_new_line_of_business(sandbox, lobs_repo, "Faber", issuer=True)
     await create_new_line_of_business(sandbox, lobs_repo, "Acme", issuer=False)
+    await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=False)
 
     # build data set for this sandbox
 

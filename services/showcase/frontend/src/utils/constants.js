@@ -32,5 +32,6 @@ export const Regex = Object.freeze({
 export const Tenants = Object.freeze({
   ALICE: 'Alice',
   ACME: 'Acme',
-  FABER: 'Faber'
+  FABER: 'Faber',
+  OPENCLIMATE: 'Openclimate'
 });

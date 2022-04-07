@@ -2,7 +2,14 @@
   <v-card>
     <v-card-title>
       <v-icon large left color="indigo"> mail </v-icon>
-      <span class="text-h6">Messages</span>
+      <span class="text-h6">Messages 
+        <button id="show-modal" @click="showModal = true"><v-icon>person_add</v-icon></button>
+        <modal :show="showModal" @close="showModal = false">
+          <template #header>
+            <h3>Receive Invitation</h3>
+          </template>
+        </modal>
+      </span>
     </v-card-title>
 
     <v-card-text>
@@ -93,14 +100,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import Modal from '@/components/openclimate/Modal.vue';
 
 export default {
   name: 'OpenclimateMessages',
+  components: {
+    Modal
+  },
   data() {
     return {
       dialog: false,
       loading: true,
       rawMsgToShow: {},
+      showModal: false
     };
   },
   computed: {

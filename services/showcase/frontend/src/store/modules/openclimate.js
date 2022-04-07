@@ -173,5 +173,47 @@ export default {
         }, { root: true });
       }
     },
+    // Receive an invitation
+    async acceptExternal({ dispatch, state, rootState }, msg) {
+      let invitation = {};
+      try {
+        invitation = JSON.parse(Buffer.from(msg.split('=')[1], 'base64').toString());
+        console.log('Decoded QR', invitation);
+      } catch (error) {
+        dispatch('notifications/addNotification', {
+          message: 'An error occurred while decoding the invitation.',
+          consoleError: `Error decoding invitation: ${error}`,
+        }, { root: true });
+      }
+      let connection_id = '';
+      let sender_id = '';
+      let sender_name = '';
+      try {
+        const response = await lobService.receiveInvitationExternal(rootState.sandbox.currentSandbox.id, state.tenant.id, invitation);
+        if (response) {
+          console.log(response);
+          connection_id = response.data.connection_id;
+          sender_id =  response.data.sender_id;
+          sender_name =  response.data.sender_name;
+          dispatch('notifications/addNotification', {
+            message: `Accepted external invitation from ${msg.sender ? msg.sender.name : ''}`,
+            type: NotificationTypes.SUCCESS
+          }, { root: true });
+        }
+      } catch (error) {
+        dispatch('notifications/addNotification', {
+          message: 'An error occurred while accepting the invitation.',
+          consoleError: `Error accepting invitation: ${error}`,
+        }, { root: true });
+      }
+      try {
+        await lobService.createOutOfBandMessageAction(rootState.sandbox.currentSandbox.id, state.tenant.id, connection_id, sender_id, state.tenant.id, invitation, sender_name, 'Accepted');
+      } catch (error) {
+        dispatch('notifications/addNotification', {
+          message: 'An error occurred while setting the invitation message to accepted.',
+          consoleError: `Error updating message status: ${error}`,
+        }, { root: true });
+      }
+    },
   }
 };

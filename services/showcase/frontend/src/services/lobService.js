@@ -40,6 +40,18 @@ export default {
   createInvitationStudent(sandboxId, lobId, studentId) {
     return appAxios().post(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/create-invitation/student`, { student_id: studentId });
   },
+  
+  /**
+   * @function receiveInvitationExternal
+   * Accept an invitation
+   * @param {string} sandboxId The identifier for the sandbox
+   * @param {string} lobId The identifier for the line of business
+   * @returns {Promise} An axios response
+   */
+  receiveInvitationExternal(sandboxId, lobId, message) {
+    return appAxios().post(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/accept-external-invitation`, { invitation: message });
+  },
+  
   // --------------------------------------------------------------/invitations
 
 
@@ -221,6 +233,18 @@ export default {
       action: action
     };
     return appAxios().put(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/out-of-band-msgs`, payload);
+  },
+  createOutOfBandMessageAction(sandboxId, lobId, oobId, sender_id, recipient_id, message, sender_name, action) {
+    const payload = {
+      id: oobId,
+      sender_id: sender_id,
+      recipient_id: recipient_id,
+      invitation: message,
+      name: sender_name,
+      action: action
+    };
+    console.log('PAYLOAD ', payload);
+    return appAxios().post(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/out-of-band-msgs-external`, payload);
   },
   // -------------------------------------------------------------/messages
 

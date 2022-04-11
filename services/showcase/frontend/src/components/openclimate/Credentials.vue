@@ -6,16 +6,9 @@
         <v-system-bar v-if="revokedMsg" color="rgba(200, 060, 74)" style="justify-content: center">
           <b style="color: white;font-size: large;">{{ revokedMsg }}</b>
         </v-system-bar>
-        <v-card-title class="grey lighten-3 mb-3">{{
-          currentSandbox.governance.schema_def.name
-        }}</v-card-title>
         <v-card-text>
           <ul>
-            <li><b>Degree: </b>{{ c.attrs.degree }}</li>
-            <li><b>Completion Date: </b>{{ c.attrs.date }}</li>
-            <li><b>Name: </b>{{ c.attrs.name }}</li>
-            <li><b>Age: </b>{{ c.attrs.age }}</li>
-            <li><b>Student ID: </b>{{ c.attrs.student_id }}</li>
+            <li><b>Schema: </b>{{ c.schema_id }}</li>
             <hr class="my-2" />
             <li>
               <b>Issuer: </b>
@@ -34,7 +27,7 @@
               <v-expansion-panel-content>
                 <div><b>cred_def_id:</b> {{ c.cred_def_id }}</div>
                 <div><b>schema_id:</b> {{ c.schema_id }}</div>
-                <div><b>date_received:</b> {{ c.attrs.date }}</div>
+                <!-- <div><b>date_received:</b> {{ c.attrs.date }}</div> -->
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -63,7 +56,7 @@ export default {
   methods: {
     ...mapActions('openclimate', ['getCredentials', 'getOfbMessages']),
     issuer_name() {
-      return 'Faber College';
+      return 'OpenClimate Platform';
     },
     nym_link(cred_def_id) {
       return `http://test.bcovrin.vonx.io/browse/domain?page=1&query=${

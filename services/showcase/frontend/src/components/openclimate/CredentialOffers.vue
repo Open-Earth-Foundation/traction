@@ -10,16 +10,16 @@
       </v-card-title>
       <v-card-text>
         <v-card v-for="co in pendingCredentialOffers" :key="co.id" class="ma-3">
-          <v-card-title class="grey lighten-3 mb-3">{{
+          <!-- <v-card-title class="grey lighten-3 mb-3">{{
             currentSandbox.governance.schema_def.name
-          }}</v-card-title>
+          }}</v-card-title> -->
           <v-card-text>
             <div>
-              <b>Issuer: </b>
+              <!-- <b>Issuer: </b> -->
               <!--Ideally this would link to a local 'connection details' page-->
-              <a target="_blank" :href="nym_link(co.credential.cred_def_id)">
+              <!-- <a target="_blank" :href="nym_link(co.credential.cred_def_id)">
                 {{ issuer_name() }}
-              </a>
+              </a> -->
             </div>
             <div v-for="key in ['cred_type', 'created_at']" :key="key">
               <b>{{ key | keyToLabel }}: </b> {{ co.credential[key] }}

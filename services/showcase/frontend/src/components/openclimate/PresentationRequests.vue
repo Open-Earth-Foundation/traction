@@ -8,11 +8,11 @@
         class="ma-3"
       >
         <!-- this is not accurate, you will not know what the credential request is for... only in this specific demo -->
-        <v-card-title class="grey lighten-3 mb-3">{{
+        <!-- <v-card-title class="grey lighten-3 mb-3">{{
           currentSandbox.governance.schema_def.name
-        }}</v-card-title>
+        }}</v-card-title> -->
         <v-card-text>
-          <div><b>Verifier: </b> {{ connection_label(pr.connection_id) }}</div>
+          <!-- <div><b>Verifier: </b> {{ connection_label(pr.connection_id) }}</div> -->
           <div
             v-for="key in ['connection_id', 'created_at', 'present_state']"
             :key="key"

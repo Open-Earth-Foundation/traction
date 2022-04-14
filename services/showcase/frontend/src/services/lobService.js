@@ -243,7 +243,6 @@ export default {
       name: sender_name,
       action: action
     };
-    console.log('PAYLOAD ', payload);
     return appAxios().post(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/out-of-band-msgs-external`, payload);
   },
   // -------------------------------------------------------------/messages

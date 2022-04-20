@@ -13,7 +13,8 @@
         <strong>ID:</strong> {{ tenant.id }} <br />
         <strong>Created:</strong> {{ tenant.created_at | formatDate }} <br />
         <strong>Wallet ID:</strong> {{ tenant.wallet_id }} <br />
-        <strong>Wallet Key:</strong> {{ tenant.wallet_key }}
+        <strong>Wallet Key:</strong> {{ tenant.wallet_key }} <br />
+        <strong>Public DID:</strong> {{ tenant.public_did }}
       </p>
     </v-card-text>
   </v-card>

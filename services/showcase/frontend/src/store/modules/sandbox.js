@@ -72,6 +72,7 @@ export default {
       if (toSelect) {
         commit('SET_CURRENT', toSelect);
         commit('alice/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.ALICE), { root: true });
+        commit('openclimate/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.OPENCLIMATE), { root: true });
         commit('faber/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.FABER), { root: true });
         commit('acme/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.ACME), { root: true });
       }
@@ -83,6 +84,7 @@ export default {
         const response = await sandboxService.getSandbox(getters.currentSandbox.id);
         commit('SET_CURRENT', response.data);
         commit('alice/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.ALICE), { root: true });
+        commit('openclimate/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.OPENCLIMATE), { root: true });
         commit('faber/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.FABER), { root: true });
         commit('acme/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.ACME), { root: true });
       } catch (error) {

@@ -60,10 +60,20 @@ class AcceptInvitationRequest(pydantic.BaseModel):
     sender_id: uuid.UUID
     invitation: dict
 
+class AcceptExternalInvitationRequest(pydantic.BaseModel):
+    invitation: dict
 
+class OutOfBandCreateExtrnal(pydantic.BaseModel):
+    id: uuid.UUID
+    sender_id: uuid.UUID
+    recipient_id: uuid.UUID
+    invitation: dict
+    name: Optional[str] = None
+    action: Optional[str] = None
 class AcceptInvitationResponse(pydantic.BaseModel):
     sender_id: uuid.UUID
     connection_id: uuid.UUID
+    sender_name: Optional[str] = None
 
 
 class TenantWebhookRead(pydantic.BaseModel):
@@ -95,6 +105,7 @@ async def create_new_sandbox(
     alice = await create_new_line_of_business(sandbox, lobs_repo, "Alice", issuer=False)
     await create_new_line_of_business(sandbox, lobs_repo, "Faber", issuer=True)
     await create_new_line_of_business(sandbox, lobs_repo, "Acme", issuer=False)
+    await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=False)
 
     # build data set for this sandbox
 
@@ -345,6 +356,45 @@ async def accept_invitation(
         connection_id=uuid.UUID(resp["connection_id"]),
     )
 
+async def accept_external_invitation(
+    sandbox_id: uuid.UUID,
+    lob_id: uuid.UUID,
+    payload: AcceptExternalInvitationRequest,
+    db: AsyncSession,
+) -> AcceptInvitationResponse:
+    sandbox = await get_sandbox(sandbox_id, db)
+
+    recipient = await get_line_of_business(sandbox, lob_id, db)
+
+    # for showcase demo, we know the lob is in our db
+    # in the real world, then sender will be completely external
+    # sender = await get_line_of_business(sandbox, payload.sender_id, db)
+
+    # do a quick check for existing connection with this alias...
+    # check_resp = await traction.get_connections(
+    #     recipient.wallet_id, recipient.wallet_key, sender.name
+    # )
+    # if len(check_resp) > 0:
+    #     detail = f"{recipient.name} has an existing connection with {sender.name}."
+    #     if check_resp[0]["state"] == "invitation":
+    #         detail = f"{recipient.name} has created and invitation for {sender.name}."
+    #     raise HTTPException(
+    #         status_code=status.HTTP_409_CONFLICT,
+    #         detail=detail,
+    #     )
+    name = "Hub-"+str(uuid.uuid4())
+    resp = await traction.accept_invitation(
+        recipient.wallet_id, recipient.wallet_key, name, payload.invitation
+    )
+
+    # the sender and recipient should start getting webhook updates about
+    # changes in connection state...
+
+    return AcceptInvitationResponse(
+        sender_id=uuid.uuid4(),
+        connection_id=uuid.UUID(resp["connection_id"]),
+        sender_name=name
+    )
 
 async def promote_lob_to_issuer(
     sandbox_id: uuid.UUID,

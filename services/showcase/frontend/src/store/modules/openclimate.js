@@ -142,6 +142,7 @@ export default {
     async getPresentationRequests({ commit, dispatch, state, rootState }) {
       try {
         const response = await lobService.getPresentationRequests(rootState.sandbox.currentSandbox.id, state.tenant.id);
+        console.log('Presentation req', response);
         commit('SET_PRESENTATION_REQUESTS', response.data);
       }
       catch (error) {

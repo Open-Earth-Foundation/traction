@@ -27,18 +27,6 @@
                 .requested_attributes"
               :key="attr.name"
             >
-              <li>
-                <b>{{ attr.name | keyToLabel }} </b>
-                <br /><i>RESTRICTIONS:</i> <br />
-                <div class="ml-2">
-                  <ul>
-                    <li>
-                      cred_def_id ==
-                      {{ attr.restrictions[0].cred_def_id }}
-                    </li>
-                  </ul>
-                </div>
-              </li>
             </div>
           </ul>
 

@@ -91,11 +91,24 @@ async def create_new_sandbox(
     applicant_repo = ApplicantRepository(db_session=db)
     student_repo = StudentRepository(db_session=db)
     if not payload.governance:
+        # schema_def = SchemaDef(
+        #     name="Education Degree",
+        #     attributes=["student_id", "name", "date", "degree", "age"],
+        # )
+        
         schema_def = SchemaDef(
-            name="Education Degree",
-            attributes=["student_id", "name", "date", "degree", "age"],
+            name="Verified Company",
+            attributes=["company_id", "name", "date"],
         )
         payload.governance = Governance(
+            schema_def=schema_def,
+        )
+
+        schema_def = SchemaDef(
+            name="Scope 1 GHG",
+            attributes=["facility_emissions_scope1_co2e", "facility_name", "facility_country", "organization_name", "facility_jurisdiction"],
+        )
+        payload.governance_cas = Governance(
             schema_def=schema_def,
         )
 
@@ -103,19 +116,19 @@ async def create_new_sandbox(
 
     # create traction tenants for our lobs
     alice = await create_new_line_of_business(sandbox, lobs_repo, "Alice", issuer=False)
-    await create_new_line_of_business(sandbox, lobs_repo, "Faber", issuer=True)
-    await create_new_line_of_business(sandbox, lobs_repo, "Acme", issuer=False)
-    await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=False)
+    await create_new_line_of_business(sandbox, lobs_repo, "Bcgov", issuer=True)
+    await create_new_line_of_business(sandbox, lobs_repo, "Acme", issuer=True)
+    bw = await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=False)
 
     # build data set for this sandbox
 
     # Alice Smith is our known student at Faber...
     # This degree data will be issued as a credential by Faber to Alice
     student = StudentCreate(
-        name="Alice Smith",
+        name="Enterprise Wallet",
         sandbox_id=sandbox.id,
-        wallet_id=alice.wallet_id,
-        alias=alice.name,
+        wallet_id=bw.wallet_id,
+        alias=bw.name,
         age=24,
         degree="Maths",
         student_id="AS1234567",
@@ -127,29 +140,30 @@ async def create_new_sandbox(
     # The degree data will be populated through presentation exchanges
     # between Alice's traction tenant and Acme's traction tenant
     # Acme will update their LOB data after exchange
+    
     applicant = ApplicantCreate(
-        name="Alice Smith",
+        name="Enterprise Wallet",
         sandbox_id=sandbox.id,
-        wallet_id=alice.wallet_id,
-        alias=alice.name,
+        wallet_id=bw.wallet_id,
+        alias=bw.name,
         degree=None,
         date=None,
     )
     await applicant_repo.create(applicant)
 
-    # make 5 random students
-    rand_students = StudentCreateFactory.batch(5, sandbox_id=sandbox.id)
-    for s in rand_students:
-        if s.name == "Alice Smith":
-            continue
-        await student_repo.create(s)
+    # # make 5 random students
+    # rand_students = StudentCreateFactory.batch(5, sandbox_id=sandbox.id)
+    # for s in rand_students:
+    #     if s.name == "Alice Smith":
+    #         continue
+    #     await student_repo.create(s)
 
-    # make 5 random job applicants
-    rand_applicants = ApplicantCreateFactory.batch(5, sandbox_id=sandbox.id)
-    for s in rand_applicants:
-        if s.name == "Alice Smith":
-            continue
-        await applicant_repo.create(s)
+    # # make 5 random job applicants
+    # rand_applicants = ApplicantCreateFactory.batch(5, sandbox_id=sandbox.id)
+    # for s in rand_applicants:
+    #     if s.name == "Alice Smith":
+    #         continue
+    #     await applicant_repo.create(s)
 
     return await sandbox_repo.get_by_id_populated(sandbox.id)
 

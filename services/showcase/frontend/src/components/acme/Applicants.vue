@@ -9,7 +9,7 @@
       />
     </div>
     <div v-else class="applicants-list">
-      <h3 class="mb-3">Job Applicants ({{ applicants.length }})</h3>
+      <h3 class="mb-3">Enterprise Business Wallets ({{ applicants.length }})</h3>
       <v-row>
         <v-col v-for="appl in applicants" :key="appl.id" cols="12" lg="6" xl="4">
           <ApplicantCard :applicant="appl" />

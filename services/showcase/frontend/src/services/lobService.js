@@ -183,6 +183,17 @@ export default {
   },
   /**
    * @function issueDegree
+   * Issue a degree to a student
+   * @param {string} sandboxId The identifier for the sandbox
+   * @param {string} lobId The identifier for the line of business
+   * @param {string} studentId The identifier for the student
+   * @returns {Promise} An axios response
+   */
+  issueGHG(sandboxId, lobId, studentId) {
+    return appAxios().post(`${ApiRoutes.SANDBOXES}/${sandboxId}/lobs/${lobId}/students/${studentId}/issue-ghg`);
+  },
+  /**
+   * @function issueDegree
    * Create a invitation
    * @param {string} sandboxId The identifier for the sandbox
    * @param {string} lobId The identifier for the line of business

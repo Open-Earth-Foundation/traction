@@ -9,16 +9,16 @@
           <router-link :to="{ name: 'Innkeeper' }">Innkeeper</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Faber' }">Faber</router-link>
+          <router-link :to="{ name: 'BCGov' }">BCGov</router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link :to="{ name: 'Alice' }">Alice</router-link>
+        </li> -->
+        <li>
+          <router-link :to="{ name: 'Acme' }">CAS</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Acme' }">Acme</router-link>
-        </li>
-        <li>
-          <router-link :to="{ name: 'Openclimate' }">Openclimate</router-link>
+          <router-link :to="{ name: 'Openclimate' }">Enterprise Wallet</router-link>
         </li>
       </ul>
     </div>

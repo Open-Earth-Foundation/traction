@@ -54,7 +54,7 @@ export default {
         const response = await lobService.makeIssuer(state.currentSandbox.id, tenantId);
         if (response) {
           dispatch('notifications/addNotification', {
-            message: 'The request to make Faber College an Issuer was received. Check back to see once it has processed',
+            message: 'The request to make an Issuer was received. Check back to see once it has processed',
             type: NotificationTypes.SUCCESS
           }, { root: true });
         }
@@ -73,7 +73,8 @@ export default {
         commit('SET_CURRENT', toSelect);
         commit('alice/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.ALICE), { root: true });
         commit('openclimate/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.OPENCLIMATE), { root: true });
-        commit('faber/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.FABER), { root: true });
+        commit('bcgov/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.BCGOV), { root: true });
+        commit('cas/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.CAS), { root: true });
         commit('acme/SET_TENANT', toSelect.lobs.find(t => t.name == Tenants.ACME), { root: true });
       }
     },
@@ -85,7 +86,8 @@ export default {
         commit('SET_CURRENT', response.data);
         commit('alice/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.ALICE), { root: true });
         commit('openclimate/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.OPENCLIMATE), { root: true });
-        commit('faber/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.FABER), { root: true });
+        commit('bcgov/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.BCGOV), { root: true });
+        commit('cas/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.CAS), { root: true });
         commit('acme/SET_TENANT', response.data.lobs.find(t => t.name == Tenants.ACME), { root: true });
       } catch (error) {
         dispatch('notifications/addNotification', {

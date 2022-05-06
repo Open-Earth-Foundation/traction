@@ -1,10 +1,10 @@
 <template >
   <div class="students">
-    <v-parallax dark src="@/assets/images/library.jpg" class="faber-header">
+    <v-parallax dark src="@/assets/images/canada-1024x250.jpg" class="faber-header">
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
-          <h1 class="mb-4" color="red">Faber College</h1>
-          <h4 class="subheading">Student Registry</h4>
+          <h1 class="mb-4" color="#FFF">BC Gov</h1>
+          <h4 class="subheading">Companies Registry</h4>
         </v-col>
       </v-row>
     </v-parallax>
@@ -26,11 +26,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import Header from '@/components/faber/Header.vue';
-import Students from '@/components/faber/Students.vue';
+import Header from '@/components/bcgov/Header.vue';
+import Students from '@/components/bcgov/Students.vue';
 
 export default {
-  name: 'Faber',
+  name: 'BCGov',
   components: {
     Header,
     Students,
@@ -44,7 +44,7 @@ export default {
     ...mapGetters('sandbox', ['currentSandbox']),
   },
   methods: {
-    ...mapActions('faber', ['refreshLob']),
+    ...mapActions('bcgov', ['refreshLob']),
     async refreshFaber() {
       this.loading = true;
       await this.refreshLob();

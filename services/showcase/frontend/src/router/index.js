@@ -29,9 +29,9 @@ export default function getRouter(basePath = '/') {
         component: () => import(/* webpackChunkName: "innkeeper" */ '@/views/Innkeeper.vue'),
       },
       {
-        path: '/faber',
-        name: 'Faber',
-        component: () => import(/* webpackChunkName: "faber" */ '@/views/Faber.vue'),
+        path: '/bcgov',
+        name: 'BCGov',
+        component: () => import(/* webpackChunkName: "BCGov" */ '@/views/BCGov.vue'),
       },
       {
         path: '/alice',
@@ -46,7 +46,7 @@ export default function getRouter(basePath = '/') {
       {
         path: '/openeclimate',
         name: 'Openclimate',
-        component: () => import(/* webpackChunkName: "acme" */ '@/views/Openclimate.vue'),
+        component: () => import(/* webpackChunkName: "openeclimate" */ '@/views/Openclimate.vue'),
       },
       {
         path: '/404',

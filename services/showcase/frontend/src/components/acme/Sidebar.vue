@@ -12,10 +12,10 @@
         <v-list-item link>
           <v-list-item-content>
             <v-list-item-title class="text-h6">
-              HR Manager 1
+              Manager 1
             </v-list-item-title>
             <v-list-item-subtitle>
-              human.res@acmecorp.com
+              manager@cas.com
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -50,7 +50,7 @@ export default {
         icon: 'mdi-card-account-details',
         class: 'd-none d-sm-flex',
       },
-      { text: 'Job Applicants', icon: 'mdi-account-multiple' },
+      { text: 'Wallets', icon: 'mdi-account-multiple' },
       { text: 'Starred', icon: 'mdi-star', class: 'd-none d-sm-flex' },
       { text: 'Recent', icon: 'mdi-history', class: 'd-none d-sm-flex' },
       { text: 'Offline', icon: 'mdi-check-circle', class: 'd-none d-sm-flex' },

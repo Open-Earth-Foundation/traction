@@ -51,7 +51,7 @@ export default {
         );
         if (response) {
           dispatch('notifications/addNotification', {
-            message: `Invited ${student.name} to connect to Faber College.`,
+            message: `Invited ${student.name} to connect to BC Gov.`,
             type: NotificationTypes.SUCCESS
           }, { root: true });
         }
@@ -73,15 +73,15 @@ export default {
         );
         if (response) {
           dispatch('notifications/addNotification', {
-            message: `Issued a Degree Credential from ${state.tenant.name} to ${student.name}.`,
+            message: `Issued a Company Credential from ${state.tenant.name} to ${student.name}.`,
             type: NotificationTypes.SUCCESS
           }, { root: true });
         }
       }
       catch (error) {
         dispatch('notifications/addNotification', {
-          message: `An error while issuing the degree to ${student.name}.`,
-          consoleError: `Error issuing degree: ${error}`,
+          message: `An error while issuing the Company to ${student.name}.`,
+          consoleError: `Error issuing Company: ${error}`,
         }, { root: true });
       }
     },
@@ -110,15 +110,15 @@ export default {
         );
         if (response) {
           dispatch('notifications/addNotification', {
-            message: `Revoking Degree Credential from ${student.name}.`,
+            message: `Revoking Company Credential from ${student.name}.`,
             type: NotificationTypes.SUCCESS
           }, { root: true });
         }
       }
       catch (error) {
         dispatch('notifications/addNotification', {
-          message: `An error while issuing the degree to ${student.name}.`,
-          consoleError: `Error issuing degree: ${error}`,
+          message: `An error while issuing the Company to ${student.name}.`,
+          consoleError: `Error issuing Company: ${error}`,
         }, { root: true });
       }
     },

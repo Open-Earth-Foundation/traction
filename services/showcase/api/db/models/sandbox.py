@@ -25,6 +25,7 @@ class Governance(pydantic.BaseModel):
 class SandboxBase(BaseModel):
     tag: Optional[str] = Field(nullable=True)
     governance: dict = Field(default={}, sa_column=Column(JSON))
+    governance_cas: dict = Field(default={}, sa_column=Column(JSON))
 
 
 class Sandbox(SandboxBase, BaseTable, table=True):
@@ -36,12 +37,14 @@ class Sandbox(SandboxBase, BaseTable, table=True):
 class SandboxCreate(SandboxBase):
     tag: Optional[str] = None
     governance: Optional[Governance] = None
+    governance_cas: Optional[Governance] = None
 
 
 class SandboxUpdate(SandboxBase):
     id: uuid.UUID
     tag: Optional[str] = None
     governance: Optional[Governance] = None
+    governance_cas: Optional[Governance] = None
 
 
 class SandboxRead(SandboxBase):
@@ -50,3 +53,4 @@ class SandboxRead(SandboxBase):
     updated_at: datetime
     tag: Optional[str] = None
     governance: Optional[Governance] = None
+    governance_cas: Optional[Governance] = None

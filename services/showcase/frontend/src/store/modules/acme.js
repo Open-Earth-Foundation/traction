@@ -74,6 +74,28 @@ export default {
         }, { root: true });
       }
     },
+    // Issue a Scope 1 GHG 
+    async issueGHG({ dispatch, rootState, state }, applicant) {
+      try {
+        const response = lobService.issueGHG(
+          rootState.sandbox.currentSandbox.id,
+          state.tenant.id,
+          applicant.id
+        );
+        if (response) {
+          dispatch('notifications/addNotification', {
+            message: `Issued a HGH Credential from ${state.tenant.name} to ${applicant.name}.`,
+            type: NotificationTypes.SUCCESS
+          }, { root: true });
+        }
+      }
+      catch (error) {
+        dispatch('notifications/addNotification', {
+          message: `An error while issuing the Company to ${applicant.name}.`,
+          consoleError: `Error issuing Company: ${error}`,
+        }, { root: true });
+      }
+    },
 
     // Re-get the relevant info for the Acme page
     async refreshLob({ commit, dispatch }) {

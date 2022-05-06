@@ -30,7 +30,7 @@ async def handle_connections(lob: Lob, payload: dict, db: AsyncSession):
     try:
         connection = json.loads(payload["connection"])
         # student should only get an invitation from Faber
-        if connection["alias"] == "Faber":
+        if connection["alias"] == "Bcgov":
             stu_repo = StudentRepository(db_session=db)
             student = await stu_repo.get_by_alias_in_sandbox(lob.sandbox_id, lob.name)
             student.invitation_state = connection["connection_state"]
@@ -76,23 +76,46 @@ async def handle_issuer(lob: Lob, payload: dict, db: AsyncSession):
                 random.randint(1, 101),
             )
         )
-        schema = {
-            "schema_name": sb.governance.schema_def.name,
-            "schema_version": version,
-            "attributes": sb.governance.schema_def.attributes,
-        }
-        tag = f"degree_{version}"
-        await traction.tenant_create_schema(
-            wallet_id=lob.wallet_id,
-            wallet_key=lob.wallet_key,
-            schema=schema,
-            cred_def_tag=tag,
-        )
 
-        # update governance
-        sb.governance.schema_def.version = version
-        sb.governance.cred_def_tag = tag
-        await sb_repo.update(sb)
+        if lob.name == "Bcgov":
+            schema = {
+                "schema_name": sb.governance.schema_def.name,
+                "schema_version": version,
+                "attributes": sb.governance.schema_def.attributes,
+            }
+            tag = f"company_{version}"
+            await traction.tenant_create_schema(
+                wallet_id=lob.wallet_id,
+                wallet_key=lob.wallet_key,
+                schema=schema,
+                cred_def_tag=tag,
+            )
+
+            # update governance
+            sb.governance.schema_def.version = version
+            sb.governance.cred_def_tag = tag
+            await sb_repo.update(sb)
+
+        if lob.name == "Acme":
+            # create scope 1 schema
+            schema = {
+                "schema_name": sb.governance_cas.schema_def.name,
+                "schema_version": version,
+                "attributes": sb.governance_cas.schema_def.attributes,
+            }
+            tag = f"scope1_{version}"
+            await traction.tenant_create_schema(
+                wallet_id=lob.wallet_id,
+                wallet_key=lob.wallet_key,
+                schema=schema,
+                cred_def_tag=tag,
+            )
+
+            # update governance
+            sb.governance_cas.schema_def.version = version
+            sb.governance_cas.cred_def_tag = tag
+            
+            await sb_repo.update(sb)
     return True
 
 
@@ -106,18 +129,34 @@ async def handle_schema(lob: Lob, payload: dict, db: AsyncSession):
     # 'cred_def_tag': 'demo_002'
     # }
     if payload["status"] == "completed" and payload["cred_def_state"] == "completed":
-        cred_def_id = payload["cred_def_id"]
-        repo = LobRepository(db_session=db)
-        lob.cred_def_id = cred_def_id
-        upd = LobUpdate(
-            **lob.dict(),
-        )
-        await repo.update(upd)
+        if lob.name == "Bcgov":
+            cred_def_id = payload["cred_def_id"]
+            repo = LobRepository(db_session=db)
+            lob.cred_def_id = cred_def_id
+            upd = LobUpdate(
+                **lob.dict(),
+            )
+            await repo.update(upd)
 
-        sb_repo = SandboxRepository(db_session=db)
-        sb = await sb_repo.get_by_id(lob.sandbox_id)
-        sb.governance.schema_def.id = payload["schema_id"]
-        sb.governance.cred_def_id = payload["cred_def_id"]
+            sb_repo = SandboxRepository(db_session=db)
+            sb = await sb_repo.get_by_id(lob.sandbox_id)
+            sb.governance.schema_def.id = payload["schema_id"]
+            sb.governance.cred_def_id = payload["cred_def_id"]
+        
+        if lob.name == "Acme":
+            cred_def_id = payload["cred_def_id"]
+            repo = LobRepository(db_session=db)
+            lob.cred_def_id = cred_def_id
+            upd = LobUpdate(
+                **lob.dict(),
+            )
+            await repo.update(upd)
+
+            sb_repo = SandboxRepository(db_session=db)
+            sb = await sb_repo.get_by_id(lob.sandbox_id)
+            sb.governance_cas.schema_def.id = payload["schema_id"]
+            sb.governance_cas.cred_def_id = payload["cred_def_id"]
+        
         await sb_repo.update(sb)
 
     return True

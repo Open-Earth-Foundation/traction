@@ -1,6 +1,6 @@
 <template>
   <div class="students-list">
-    <h2 class="my-4">Registered Student List</h2>
+    <h2 class="my-4">Registered Companies List</h2>
     <!-- table header -->
     <v-data-table
       class="px-md-16"
@@ -55,7 +55,7 @@
               <v-icon>mdi-certificate</v-icon>
             </v-btn>
           </template>
-          <span>Issue a Degree Credential</span>
+          <span>Issue a Company Credential</span>
         </v-tooltip>
 
         <!-- View Issued Credential -->
@@ -98,7 +98,7 @@
     <v-dialog v-model="studentDialog" width="800">
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Student Details
+          Companie Details
         </v-card-title>
 
         <v-card-text>
@@ -119,7 +119,7 @@
     <v-dialog v-model="degreeDialog" width="800">
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
-          Degree Details
+          Cred Details
         </v-card-title>
 
         <v-card-text>
@@ -168,7 +168,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('faber', ['students', 'tenant', 'issuedCredentials']),
+    ...mapGetters('bcgov', ['students', 'tenant', 'issuedCredentials']),
     ...mapGetters('sandbox', ['currentSandbox']),
     credentialList() {
       const credentials = this.issuedCredentials.map((cred) => {
@@ -204,7 +204,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('faber', ['getStudents', 'inviteStudent', 'issueDegree', 'getIssuedCredentials', 'revokeDegree', 'refreshLob']),
+    ...mapActions('bcgov', ['getStudents', 'inviteStudent', 'issueDegree', 'getIssuedCredentials', 'revokeDegree', 'refreshLob']),
     showStudentDetails(student) {
       this.selectedStudent = student;
       this.studentDialog = true;

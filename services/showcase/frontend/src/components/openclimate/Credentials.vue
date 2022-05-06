@@ -20,6 +20,7 @@
               <b> Connection to Issuer: </b>
               Active
             </li>
+            <li><b>attributes: </b>{{ c.attrs }}</li>
           </ul>
           <v-expansion-panels class="mt-2">
             <v-expansion-panel>

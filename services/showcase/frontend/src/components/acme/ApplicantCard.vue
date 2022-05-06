@@ -33,8 +33,6 @@
             </template>
             <span>ERROR: DATA COULD NOT BE VERIFIED</span>
           </v-tooltip>
-          Degree: {{ applicant.degree }}
-          <br />
 
           Invitation State: {{ applicant.invitation_state }}
           <v-icon v-if="applicant.invitation_state === 'completed'" small>
@@ -66,9 +64,9 @@
         rounded
         text
         :disabled="applicant.invitation_state !== 'completed'"
-        @click.prevent="requestDegree(applicant)"
+        @click.prevent="issueGHG(applicant)"
       >
-        Request Degree
+        Issue Scope1 GHG
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -87,7 +85,7 @@ export default {
   },
   methods: {
     ...mapMutations('acme', ['SET_SELECTED_APPLICANT']),
-    ...mapActions('acme', ['createInvitation', 'requestDegree']),
+    ...mapActions('acme', ['createInvitation', 'requestDegree', 'issueGHG']),
   },
 };
 </script>

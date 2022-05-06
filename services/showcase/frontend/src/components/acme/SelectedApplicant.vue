@@ -2,7 +2,7 @@
   <div>
     <v-card class="mx-auto" tile outlined>
       <v-app-bar dark color="rgba(0, 160, 144)" elevation="0">
-        <v-toolbar-title>Job Applicant</v-toolbar-title>
+        <v-toolbar-title>Enterprise Wallet</v-toolbar-title>
 
         <v-spacer></v-spacer>
 

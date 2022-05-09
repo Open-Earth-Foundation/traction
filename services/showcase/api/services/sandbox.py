@@ -106,7 +106,7 @@ async def create_new_sandbox(
 
         schema_def = SchemaDef(
             name="Scope 1 GHG",
-            attributes=["facility_emissions_scope1_co2e", "facility_name", "facility_country", "organization_name", "facility_jurisdiction"],
+            attributes=["facility_emissions_scope1_co2e", "credential_reporting_date_start", "credential_reporting_date_end", "facility_name", "facility_country", "organization_name", "facility_jurisdiction"],
         )
         payload.governance_cas = Governance(
             schema_def=schema_def,
@@ -118,7 +118,7 @@ async def create_new_sandbox(
     alice = await create_new_line_of_business(sandbox, lobs_repo, "Alice", issuer=False)
     await create_new_line_of_business(sandbox, lobs_repo, "Bcgov", issuer=True)
     await create_new_line_of_business(sandbox, lobs_repo, "Acme", issuer=True)
-    bw = await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=False)
+    bw = await create_new_line_of_business(sandbox, lobs_repo, "Openclimate", issuer=True)
 
     # build data set for this sandbox
 

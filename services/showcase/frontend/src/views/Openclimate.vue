@@ -24,6 +24,33 @@
           </v-btn>
         </span>
       </v-app-bar>
+      <v-row>
+        <v-col cols="12" sm="6">
+          <div v-if="tenant.public_did">
+            <v-icon color="success">check_circle_outline</v-icon> Business Wallet
+            is an Issuer
+          </div>
+          <div v-else>
+            <v-icon color="error">error_outline</v-icon> Business Wallet has not
+            met the criteria to be an Issuer yet
+
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  large
+                  icon
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="makeIssuer(tenant.id)"
+                >
+                  <v-icon>forward_to_inbox</v-icon>
+                </v-btn>
+              </template>
+              <span>Request Issuer status</span>
+            </v-tooltip>
+          </div>
+        </v-col>
+      </v-row>
       <v-row class="mt-4" v-if="currentSandbox">
         <v-col cols="12" sm="4" md="3">
           <User />
@@ -71,9 +98,11 @@ export default {
   },
   computed: {
     ...mapGetters('sandbox', ['currentSandbox']),
+    ...mapGetters('openclimate', ['tenant']),
   },
   methods: {
     ...mapActions('openclimate', ['refreshLob']),
+    ...mapActions('sandbox', ['makeIssuer']),
     async refreshOpenclimate() {
       this.loading = true;
       await this.refreshLob();

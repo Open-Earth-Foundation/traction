@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar light flat prominent src="@/assets/images/computer.jpg">
+  <v-toolbar light flat prominent>
     <template v-slot:img="{ props }">
       <v-img
         v-bind="props"
@@ -7,16 +7,16 @@
       ></v-img>
     </template>
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-    <v-toolbar-title color="white">
-      <v-icon x-large color="black">mdi-alpha-a-box</v-icon> CAS
-      Portal
-    </v-toolbar-title>
     <v-row>
       <v-col cols="12" sm="6">
-        <div v-if="tenant.cred_def_id">
+        <div v-if="tenant.public_did">
           <v-icon color="success">check_circle_outline</v-icon> CAS
           is an Issuer
+          <p class="mt-3 mb-0">
+            <strong>Wallet ID:</strong> {{ tenant.wallet_id }} <br />
+            <strong>Wallet Key:</strong> {{ tenant.wallet_key }} <br />
+            <strong>Public DID:</strong> {{ tenant.public_did }}
+          </p>
         </div>
         <div v-else>
           <v-icon color="error">error_outline</v-icon> CAS has not

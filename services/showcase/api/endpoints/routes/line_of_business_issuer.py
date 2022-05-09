@@ -1,4 +1,5 @@
 import logging
+import time
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
@@ -70,6 +71,8 @@ async def issue_ghg(
     print(cas)
     attrs = [
         {"name": "facility_emissions_scope1_co2e", "value": "1000"},
+        {"name": "credential_reporting_date_start", "value": int(time.time())},
+        {"name": "credential_reporting_date_end", "value": int(time.time())},
         {"name": "facility_name", "value": "Copper Mountain"},
         {"name": "facility_country", "value": "Canada"},
         {"name": "organization_name", "value": org.name},

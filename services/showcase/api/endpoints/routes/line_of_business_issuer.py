@@ -34,9 +34,9 @@ async def issue_degree(
     faber = await lob_repo.get_by_id_with_sandbox(sandbox_id, lob_id)
 
     attrs = [
-        {"name": "company_id", "value": student.student_id},
-        {"name": "name", "value": student.name},
-        {"name": "date", "value": student.date.date().strftime("%d-%m-%Y")},
+        {"name": "organization_id", "value": student.student_id},
+        {"name": "organization_name", "value": student.name},
+        {"name": "registration_date", "value": student.date.date().strftime("%d-%m-%Y")},
     ]
 
     resp = await traction.tenant_issue_credential(
@@ -73,10 +73,10 @@ async def issue_ghg(
         {"name": "facility_emissions_scope1_co2e", "value": "1000"},
         {"name": "credential_reporting_date_start", "value": int(time.time())},
         {"name": "credential_reporting_date_end", "value": int(time.time())},
-        {"name": "facility_name", "value": "Copper Mountain"},
+        {"name": "facility_name", "value": "Copper Mountain Mine"},
         {"name": "facility_country", "value": "Canada"},
-        {"name": "organization_name", "value": org.name},
-        {"name": "facility_jurisdiction", "value": "BC"},
+        {"name": "organization_name", "value": "COPPER MOUNTAIN MINING CORPORATION"},
+        {"name": "facility_jurisdiction", "value": "British Columbia"},
     ]
 
     resp = await traction.tenant_issue_credential(

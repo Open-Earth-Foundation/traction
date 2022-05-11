@@ -98,7 +98,7 @@ async def create_new_sandbox(
         
         schema_def = SchemaDef(
             name="Verified Company",
-            attributes=["company_id", "name", "date"],
+            attributes=["organization_id", "organization_name", "registration_date"],
         )
         payload.governance = Governance(
             schema_def=schema_def,
